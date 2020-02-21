@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理界面</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <!--    <script-->
+    <!--            src="https://code.jquery.com/jquery-2.2.4.js"-->
+    <!--            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="-->
+    <!--            crossorigin="anonymous"></script>-->
+    <meta name="theme-color" content="#563d7c">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .themed-grid-col {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            background-color: rgba(86, 61, 124, .15);
+            border: 1px solid rgba(86, 61, 124, .2);
+        }
+
+        .themed-container {
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: rgba(0, 123, 255, .15);
+            border: 1px solid rgba(0, 123, 255, .2);
+        }
+
+    </style>
+    <script type="text/javascript" src="../static/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        function fuck() {
+            alert("操作成功");
+        }
+    </script>
+</head>
+<body class="py-4">
+
+<div class="container">
+    <h1>订单管理</h1>
+    <div class="row mb-3">
+        <div class="col-md-2 themed-grid-col">订单号</div>
+        <div class="col-md-2 themed-grid-col">用户ID</div>
+        <div class="col-md-2 themed-grid-col">用户名</div>
+        <div class="col-md-2 themed-grid-col">商品ID</div>
+        <div class="col-md-2 themed-grid-col">商品名</div>
+        <div class="col-md-2 themed-grid-col">操作</div>
+    </div>
+    <div class="row mb-3" th:each="order, orderStat:${session.orders}">
+        <div class="col-md-2 themed-grid-col" th:text="${order.orderId}"></div>
+        <div class="col-md-2 themed-grid-col" th:text="${order.loginUser.userId}"></div>
+        <div class="col-md-2 themed-grid-col" th:text="${order.loginUser.userName}"></div>
+        <div class="col-md-2 themed-grid-col" th:text="${order.merchandise.merId}"></div>
+        <div class="col-md-2 themed-grid-col" th:text="${order.merchandise.merName}"></div>
+        <div class="col-md-2 themed-grid-col">
+            <button onclick="fuck()">发货</button>
+            <button onclick="fuck()">删除</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

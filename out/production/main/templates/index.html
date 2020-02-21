@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>商城购物界面</title>
+    <link rel="canonical" href="https://v4ing.bootcss.com/docs/4.3/examples/pricing/">
+    <!--   引入的CSS文件 -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <meta charset="UTF-8">
+
+    <meta name="theme-color" content="#563d7c">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!--    本页面的自定义css-->
+    <link href="../static/css/index.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a th:href="@{/index}">小型商城</a></h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/shoppingCart">购物车</a>
+        <a class="p-2 text-dark" href="#">问题反馈</a>
+        <a class="p-2 text-dark" href="#">我要开店</a>
+        <!--        <a class="p-2 text-dark" href="#"></a>-->
+    </nav>
+    <a class="btn btn-outline-primary" href="userLogin">Sign in</a>
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="display-4">欢迎光临</h2>
+    <p class="lead">我们致力于提供简洁快速的购物体验</p>
+</div>
+
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 shadow-sm" th:each="merchanise,merStat:${merchandises}">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal" th:text="${merchanise.merName}">商品名</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">￥<span class="text-muted"
+                                                                 th:text="${merchanise.price}"></span></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <!--                    数量仅余<li th:text="${merchanise.quantity}"></li>-->
+                    <!--<li>fuck</li>
+                    <li>Email support</li>
+                    <li>Help center access</li>-->
+                </ul>
+                <a class="btn btn-lg btn-block btn-outline-primary" th:href="@{/getMerInfo(merId=${merchanise.merId})}">查看详情</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+                <small class="d-block mb-3 text-muted">&copy; Sherlock</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Cool stuff</a></li>
+                    <li><a class="text-muted" href="#">Random feature</a></li>
+                    <li><a class="text-muted" href="#">Team feature</a></li>
+                    <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                    <li><a class="text-muted" href="#">Another one</a></li>
+                    <li><a class="text-muted" href="#">Last time</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Resources</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Resource</a></li>
+                    <li><a class="text-muted" href="#">Resource name</a></li>
+                    <li><a class="text-muted" href="#">Another resource</a></li>
+                    <li><a class="text-muted" href="#">Final resource</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Team</a></li>
+                    <li><a class="text-muted" href="#">Locations</a></li>
+                    <li><a class="text-muted" href="#">Privacy</a></li>
+                    <li><a class="text-muted" href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

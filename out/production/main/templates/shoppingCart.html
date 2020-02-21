@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车界面</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <!--    <script-->
+    <!--            src="https://code.jquery.com/jquery-2.2.4.js"-->
+    <!--            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="-->
+    <!--            crossorigin="anonymous"></script>-->
+    <meta name="theme-color" content="#563d7c">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .themed-grid-col {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            background-color: rgba(86, 61, 124, .15);
+            border: 1px solid rgba(86, 61, 124, .2);
+        }
+
+        .themed-container {
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: rgba(0, 123, 255, .15);
+            border: 1px solid rgba(0, 123, 255, .2);
+        }
+
+    </style>
+    <script type="text/javascript" src="../static/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        function checkout() {
+            let checks = $("input[name='check']");
+            let numbers = $("input[name='number']");
+
+            let json = "";
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].getAttribute("checked")) {
+                    let model = {
+                        merId: numbers[i].getAttribute('id'),
+                        number: numbers[i].getAttribute('value')
+                    };
+                    json += JSON.stringify(model);
+                }
+            }
+            //alert(json);
+            $.ajax({
+                url: "purchaseWithSC",
+                type: "post",
+                data: json,
+                dataType: "text",
+                contentType: "application/json;charset=UTF-8",
+                async: false,
+                success: function () {
+                    $(window).attr({
+                        location: "orderCheckout"
+                    })
+                },
+                error: function () {
+                    alert("提交失败，没有返回值或返回值类型错误");
+                }
+            });
+        }
+    </script>
+</head>
+<body class="py-4">
+
+<div class="container">
+    <h1>我的购物车</h1>
+    <p class="lead">可以选择要购买的商品并增减商品数目</p>
+    <form>
+        <div class="row mb-3" th:each="cart, merstat:${session.shoppingCartService.shoppingCart.merchandises}">
+            <div class="col-md-3 themed-grid-col" th:text="${cart.merchandise.merName}">商品名</div>
+            <div class="col-md-3 themed-grid-col" th:text="'￥' + ${cart.merchandise.price}">单价</div>
+            <div class="col-md-3 themed-grid-col"><input type="checkbox" checked="checked" name="check">购买</div>
+            <div class="col-md-3 themed-grid-col">数量:<input type="number" min="1" th:value="${cart.number}"
+                                                            th:id="${cart.merchandise.merId}" name="number"></div>
+        </div>
+        <a class="btn btn-primary btn-lg btn-block" onclick="checkout()">结算</a>
+    </form>
+</div>
+
+</body>
+</html>

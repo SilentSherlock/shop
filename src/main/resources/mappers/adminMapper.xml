@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.model.shop.dao.AdminDao">
+    <!-- 建立结果集提取映射-->
+    <resultMap id="adminMap" type="com.model.shop.entity.Admin">
+        <id property="Id" column="Id"></id><!--主键映射-->
+        <result property="adminName" column="adminName"></result>
+        <result property="password" column="password"></result>
+        <result property="phone" column="phone"></result>
+    </resultMap>
+    <select id="getAdminByName" resultMap="adminMap">
+        select *
+        from admin
+        where adminName = #{0}
+    </select>
+    <select id="getAdminByNameAndPass" resultMap="adminMap">
+        select *
+        from admin
+        where adminName = #{adminName} and password = #{password}
+    </select>
+    <select id="getAllAdmins" resultMap="adminMap">
+        select *
+        from admin
+    </select>
+    <delete id="deleteById">
+        delete from admin
+        where Id = #{0}
+    </delete>
+    <insert id="save">
+        insert into admin(Id, adminName, password, phone)
+        values (#{Id}, #{adminName}, #{password}, #{phone})
+    </insert>
+    <update id="update">
+        update admin
+        set
+        adminName = #{adminName}, password = #{password}, phone = #{phone}
+        where Id = #{1}
+    </update>
+</mapper> 

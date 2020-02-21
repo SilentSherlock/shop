@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.model.shop.dao.MerchandiseDao">
+    <resultMap id="merchandiseMap" type="com.model.shop.entity.Merchandise">
+        <id property="Id" column="Id"></id>
+        <result property="merName" column="merName"></result>
+        <result property="merDetail" column="merDetail"></result>
+        <result property="price" column="price"></result>
+        <result property="quantity" column="quantity"></result>
+    </resultMap>
+    <select id="getAllMer" resultMap="merchandiseMap">
+        select *
+        from merchandise
+    </select>
+    <select id="getMerById" resultMap="merchandiseMap">
+        select * from
+        merchandise
+        where merId = #{0};
+    </select>
+    <select id="getMerByName" resultMap="merchandiseMap">
+        select *
+        from merchandise
+        where merName = #{0}
+    </select>
+    <delete id="deleteById">
+        delete from merchandise
+        where Id = #{0}
+    </delete>
+    <insert id="save">
+        insert into merchandise (merId, merName, merDetail, price, quantity)
+        values (#{merId}, #{merName}, #{merDetail}, #{price}, #{quantity})
+    </insert>
+    <update id="update">
+        update merchandise
+        set
+        merName = #{merName}, merDetail = #{merDetail},
+        price = #{price}, quantity = #{quantity}
+        where merId = #{1}
+    </update>
+</mapper> 

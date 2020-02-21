@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.model.shop.dao.OrderDao">
+    <resultMap id="orderMap" type="com.model.shop.entity.Order">
+        <id property="orderId" column="orderId"></id>
+        <result property="merQuantity" column="merQuantity"></result>
+        <result property="totalPrice" column="totalPrice"></result>
+        <result property="orderState" column="orderState"></result>
+        <!--关联用户和商品-->
+        <association property="loginUser" javaType="com.model.shop.entity.LoginUser">
+            <id property="userId" column="userId"></id>
+            <result property="userName" column="userName"></result>
+            <result property="password" column="password"></result>
+            <result property="phone" column="phone"></result>
+            <result property="receiveAddress" column="receiveAddress"></result>
+            <result property="email" column="email"></result>
+        </association>
+        <association property="merchandise" javaType="com.model.shop.entity.Merchandise">
+            <id property="merId" column="merId"></id>
+            <result property="merName" column="merName"></result>
+            <result property="merDetail" column="merDetail"></result>
+            <result property="price" column="price"></result>
+            <result property="quantity" column="quantity"></result>
+        </association>
+    </resultMap>
+    <!--    <select id="selectUser" resultMap="">
+            select *
+            from loginUser
+            where userId = #{userId}
+        </select>-->
+    <!--表命名为orderList， 避免与order关键字冲突-->
+    <select id="getAllOrder" resultMap="orderMap">
+        select
+        O.orderId as orderId,
+        U.userId as userId,
+        U.userName as userName,
+        M.merId as merId,
+        M.merName as merName
+        from orderList O
+        left outer join loginUser U on U.userId = O.userId
+        left outer join merChandise M on M.merId = O.merId
+    </select>
+    <!--使用关联嵌套查询，as后为表中的列名,但是查询出来如何赋值？-->
+    <select id="getOrderByUserId" resultMap="orderMap">
+        select
+        O.orderId as orderId,
+        U.userId as userId,
+        U.userName as userName,
+        M.merId as merId,
+        M.merName as merName
+        from orderList O
+        left outer join loginUser U on O.userId = U.userId
+        where O.userId = #{userId}
+    </select>
+    <insert id="save" useGeneratedKeys="true" keyProperty="orderId" parameterType="com.model.shop.entity.Order">--
+        2020.1.8 插入记录为空，数据库中自动生成了主键，但是其他数据为空，待解决
+        insert into orderList(userId, merId, merQuantity, totalPrice, orderState)
+        values(userId = #{loginUser.userId}, merId = #{merchandise.merId}, merQuantity = #{merQuantity},
+        totalPrice = #{totalPrice}, orderState = #{orderState})
+    </insert>
+</mapper> 

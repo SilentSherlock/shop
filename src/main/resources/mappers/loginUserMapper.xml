@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.model.shop.dao.LoginUserDao">
+    <resultMap id="loginUserMap" type="com.model.shop.entity.LoginUser">
+        <id property="Id" column="Id"></id>
+        <result property="userName" column="userName"></result>
+        <result property="password" column="password"></result>
+        <result property="phone" column="phone"></result>
+        <result property="receiveAddress" column="receiveAddress"></result>
+        <result property="email" column="email"></result>
+    </resultMap>
+    <select id="getAllUser" resultMap="loginUserMap">
+        select *
+        from loginUser
+    </select>
+    <select id="getUserByName" resultMap="loginUserMap">
+        select *
+        from loginUser
+        where userName = #{0}
+    </select>
+    <select id="getUserByEmail" resultMap="loginUserMap">
+        select *
+        from loginUser
+        where email = #{0}
+    </select>
+    <select id="getUserByNameAndPass" resultMap="loginUserMap">
+        select *
+        from loginUser
+        where userName = #{0} and password = #{1}
+    </select>
+    <select id="getUserByEmailAndPass" resultMap="loginUserMap">
+        select *
+        from loginUser
+        where email = #{email} and password = #{password}
+    </select>
+    <delete id="deleteById">
+        delete from loginUser
+        where Id = #{0}
+    </delete>
+    <insert id="save">
+        insert into loginUser(userId, userName, password, phone, receiveAddress, email)
+        values (#{userId}, #{userName}, #{password}, #{phone}, #{receiveAddress}, #{email})
+    </insert>
+    <update id="update">
+        update loginUser
+        set
+        userName = #{userName}, password = #{password}, phone = #{phone},
+        receiveAddress = #{receiveAddress}, email = #{email}
+        where Id = #{1}
+    </update>
+</mapper> 
